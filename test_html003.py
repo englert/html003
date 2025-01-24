@@ -2,16 +2,25 @@ import pytest
 from bs4 import BeautifulSoup
 import datetime
 import re
+import os
 
 def load_html(filename):
-    """Betölti a HTML fájlt."""
-    with open(filename, "r", encoding="utf-8") as f:
-        return BeautifulSoup(f.read(), "html.parser")
+    """Betölti a HTML fájlt, és hibát kezel."""
+    try:
+        with open(filename, "r", encoding="utf-8") as f:
+            return BeautifulSoup(f.read(), "html.parser")
+    except FileNotFoundError:
+        pytest.fail(f"A fájl nem található: {filename}")
+    except Exception as e:
+        pytest.fail(f"Hiba történt a fájl betöltése során: {e}")
 
-def load_txt(filename):
-    """Betölti a TXT fájlt."""
-    with open(filename, "r", encoding="utf-8") as f:
-        return f.read()
+def test_html_file_exists():
+    """Ellenőrzi, hogy a index.html fájl létezik-e."""
+    try:
+        load_html("index.html")
+        assert True
+    except FileNotFoundError:
+        assert False, "A index.html fájl nem létezik."
 
 def test_language_setting():
     """Ellenőrzi a nyelv beállítását."""

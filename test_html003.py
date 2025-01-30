@@ -43,7 +43,7 @@ def test_paragraph_count():
     """Ellenőrzi a bekezdések számát."""
     soup = load_html("index.html")
     paragraphs = soup.find_all("p")
-    assert len(paragraphs) == 4, "Nem pontosan 4 bekezdés található."
+    assert len(paragraphs) == 3, "Nem pontosan 3 bekezdés található."
 
 def test_subheadings():
     """Ellenőrzi a bekezdések alcímeit."""
